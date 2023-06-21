@@ -7,6 +7,9 @@ flowchart TB
 subgraph Cauldron
 direction TB
 
+Agent[Autonomous Agent]
+Agent-->Perception & Manipulation & Planning
+
 subgraph Perception
   ImageBind
   
