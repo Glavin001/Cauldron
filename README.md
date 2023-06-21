@@ -4,31 +4,33 @@
 
 ```mermaid
 flowchart TB
-subgraph Cauldron
 direction TB
 
-Agent[Autonomous Agent]
+Agent["Cauldron (Autonomous Agent)"]
 Agent-->Perception & Manipulation & Planning
 
-subgraph Perception  
-  ImageBind:::done-->Video & Image & Audio
-  subgraph Video
-    subgraph Image
-    end
-    subgraph Audio
-    end
-  end
+subgraph Perception
+  ImageBind:::done
+  Blip[BLIP2]:::done
 end
 
 Manipulation-->Perception
 subgraph Manipulation
-  subgraph Text
+  subgraph Formats
+    Slides["Presentation / Slides"]:::wip
+    Slides-->EfficientDoc & Image & Markdown
+    EfficientDoc["Efficient Document Editing"]:::missing
+    EfficientDoc-->Code & Markdown
     Code["Source Code (Programming Language)"]:::wip
-    RichDoc[Rich Text Document]:::wip
-    LLM[Large Language Model]:::done
+    Markdown[Rich/Markdown Text]:::done
+    Image
+    Video
   end
-  subgraph Visual
+  subgraph Tools
+    LLM[Large Language Model]:::wip
     SD[Stable Diffusion]:::wip
+    RunwayGen2[Runway Gen-2]:::done
+    RunwayGen2 --> Video
   end
 end
 
@@ -41,6 +43,7 @@ subgraph Learning
   end
 end
 
+Planning-->Perception & Manipulation
 subgraph Planning
   subgraph Exploration
     Density[Density Model]:::done
@@ -58,6 +61,12 @@ end
 Planning-->Reasoning
 subgraph Reasoning
   WorldModel[World Model]:::wip
+  Orca[Orca LLM]:::done
+
+  subgraph SelectTool[Tool Selection]
+    Gorilla[Gorilla LLM]:::wip
+    DefinitelySolved[Definitely Solved]:::wip
+  end
 end
 
 Reasoning & Planning-->Memory
@@ -77,8 +86,6 @@ subgraph Retrieval
   Semantic & Keyword --> Hybrid
   Semantic["Semantic Search (Dense Embeddings)"]:::done
   Keyword["Keyword Search (Sparse Embeddings)"]:::done
-end
-
 end
 
 classDef missing stroke:#f00
