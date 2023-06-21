@@ -5,6 +5,7 @@
 ```mermaid
 flowchart TB
 subgraph Cauldron
+direction TB
 
 subgraph Perception
   ImageBind
@@ -18,6 +19,19 @@ subgraph Perception
   end
 end
 
+Manipulation-->Perception
+subgraph Manipulation
+  subgraph Text
+    Code["Source Code (Programming Language)"]
+    RichDoc[Rich Text Document]
+    LLM[Large Language Model]
+  end
+  subgraph Visual
+    SD[Stable Diffusion]
+  end
+end
+
+Reasoning-->Learning
 subgraph Learning
   subgraph Training
     RLAIF[Reinforcement Learning with AI Feedback]
@@ -31,8 +45,7 @@ subgraph Planning
     Density[Density Model]
     ToT[Tree of Thought]
     Reflection
-    CoT-->Reflection
-    CoT-->ToT
+    Reflection & ToT-->CoT
     CoT[Chain of Thought]
   end
 
@@ -41,12 +54,12 @@ subgraph Planning
   end
 end
 
-Reasoning-->Planning
+Planning-->Reasoning
 subgraph Reasoning
   WorldModel[World Model]
 end
 
-Memory-->Reasoning & Planning
+Reasoning & Planning-->Memory
 subgraph Memory
   subgraph Episodic[Episodic Memory]
     REMO["Rolling Episodic Memory Organizer (REMO)"]
@@ -56,7 +69,7 @@ subgraph Memory
   
 end
 
-Retrieval-->Memory & Planning
+Memory & Planning-->Retrieval
 subgraph Retrieval
   Hybrid["Hybrid Search (Dense+Sparse Embeddings)"]
   Semantic & Keyword --> Hybrid
